@@ -1,5 +1,6 @@
 class Service::Email < Service
   def receive_event
+    p settings, site, payload
     email_address = settings
     template = html_template
     subject = "[metric.io] alert for #{payload['metric']} on #{site}"
@@ -13,7 +14,13 @@ class Service::Email < Service
         body template
       end
     end
-    mail.delivery_method.settings[:port] = 1025
+    mail.delivery_method.settings = {
+      :address   => "smtp.mandrillapp.com",
+      :domain    => "mandrillapp.com",
+      :port      => 587,
+      :user_name => 'info@metric.io',
+      :password  => '5c6e8b56-d1a4-4833-9ab9-402fb7df95f8'
+    }
     mail.deliver!
   end
 
