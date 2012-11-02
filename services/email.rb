@@ -2,7 +2,7 @@ class Service::Email < Service
   def receive_event
     email_address = settings
     template = html_template
-    subject = "[metric.io] alert for #{payload['metric']} on #{site}"
+    subject = "[metric.io] alert for #{payload['name']} on #{site}"
 
     mail = Mail.new do
       from 'info@metric.io'
@@ -53,7 +53,7 @@ class Service::Email < Service
         <table>
           <tr style="padding: 10px">
             <td style="width: 100px">metric</td>
-            <td><%= payload["metric"] %></td>
+            <td><%= payload["name"] %></td>
           </tr>
           <% if payload["meta"] %>
             <tr>
